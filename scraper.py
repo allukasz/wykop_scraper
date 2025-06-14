@@ -186,6 +186,7 @@ def save_to_pickle(file_name, objects):
     return None
 
 if __name__ == "__main__":
+    pass
     # soup, moup, doup= scrape_multiple("https://wykop.pl/tag/przegryw/archiwum/2018-06/strona/", 2, 2025, auto_span=False)
     # print(soup, moup)
     # print (len(soup), len(moup))
@@ -221,9 +222,3 @@ if __name__ == "__main__":
     # soup, moup, doup = handle_archive('https://wykop.pl/tag/przegryw/archiwum/', (1999,2001))
     # print(doup)
     # print (len(soup), len(moup))
-    res = ''
-    text = "THE MEANING OF “e-”: NEOLOGISMS AS MARKERS OF CULTURE AND TECHNOLOGY"
-    for word in text.lower().split():
-        res += f"{word.capitalize()} "
-
-    print(res)

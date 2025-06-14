@@ -3,6 +3,25 @@ import scraper as scrp
 from scraper import save_to_pickle
 
 def get_wykop_data(list_of_forums, current_year=2025, archives=False, archive_span=None):
+    """
+       Scrapes Wykop posts from multiple forums and optionally their archives. Due to how Wykop is set up comments are also treated as posts
+       Data is incrementally saved to a pickle file after each forum/archive is processed, as a low-level backup option during long scraping sessions.
+
+       Args:
+           list_of_forums (list): List of Wykop URLs for targetted tags (e.g., ["https://wykop.pl/tag/forum/"])
+           current_year (int, optional): Year to use for current scraping operations
+           archives (bool, optional): Whether to also scrape archive pages.
+           archive_span (tuple, optional): Year range for archive scraping as (start_year, end_year).
+                                          Only used when archives=True. Defaults to None.
+
+       Returns:
+           pandas.DataFrame: Combined dataset containing all scraped posts, people, and temporal data
+                            converted to a structured DataFrame format.
+
+       Note:
+           Uses auto_span=True for regular forum scraping, which automatically determines
+           the appropriate time span for data collection.
+       """
 
     master_list_posts = []
     master_list_people = []
@@ -30,24 +49,3 @@ def get_wykop_data(list_of_forums, current_year=2025, archives=False, archive_sp
 
     #use the convert to pd function
     return final_dataset
-
-if __name__ == "__main__":
-    # andrzej, jandrzej, candrzej = get_wykop_data(["https://wykop.pl/tag/przegryw/", "https://wykop.pl/tag/blackpill/", "https://wykop.pl/tag/pieklomezczyzn/"], True, (2023,2024))
-    # print(len(andrzej), len(jandrzej), len(candrzej))
-    # print(andrzej, jandrzej)
-    #
-    # end_product = get_wykop_data(["https://wykop.pl/tag/logikarozowychpaskow/", "https://wykop.pl/tag/samotnosc/"], archives=True, archive_span=(2020,2025))
-    # end_product.to_csv('final_continued_witharchive.csv')
-    # #tba "https://wykop.pl/tag/stulejacontent/" --> scrape this one without archives
-    with open ('pickle_container5.pickle', 'rb') as fp:
-        list_1 = pickle.load(fp)
-    # #
-    # pupa = scrp.convert_to_pandas(list_1[0], list_1[1], list_1[2])
-    # pupa.to_csv('niebieskiepaski.csv')
-    print(list_1[1])
-    print(len(list_1[0]), len(list_1[1]), len(list_1[2]))
-
-    # koniec = scrp.scrape_multiple("https://wykop.pl/tag/stulejacontent/strona/", 372, 2025, auto_span=False )
-    # save_to_pickle("pickle_container5.pickle",( koniec[0], koniec[1], koniec[2]))
-    # tabela = scrp.convert_to_pandas(koniec[1], koniec[0], koniec[2])
-    # tabela.to_csv("stulejacontent_noarchive.csv")
